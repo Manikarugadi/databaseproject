@@ -1,0 +1,57 @@
+-- Created by Vertabelo (http://vertabelo.com)
+-- Last modification date: 2023-04-12 04:18:33.114
+
+-- tables
+-- Table: Loan
+CREATE TABLE Loan (
+    patron_id int  NOT NULL,
+    loan_date date  NOT NULL,
+    due_date date  NOT NULL,
+    book_id int  NOT NULL,
+    books_book_id int  NOT NULL,
+    CONSTRAINT Loan_pk PRIMARY KEY (patron_id)
+);
+
+-- Table: books
+CREATE TABLE books (
+    book_id int  NOT NULL,
+    title varchar(20)  NOT NULL,
+    Author varchar(20)  NOT NULL,
+    Publisher varchar(20)  NOT NULL,
+    ISBN int  NOT NULL,
+    Availability_status varchar(10)  NOT NULL,
+    CONSTRAINT books_pk PRIMARY KEY (book_id)
+);
+
+-- Table: patrons
+CREATE TABLE patrons (
+    Name varchar(20)  NOT NULL,
+    Address varchar(30)  NOT NULL,
+    phn_num int  NOT NULL,
+    email varchar(20)  NOT NULL,
+    Loan_patron_id int  NOT NULL
+);
+
+-- Table: return
+CREATE TABLE `return` (
+    book_count int  NOT NULL,
+    return_date date  NOT NULL,
+    late_fee int  NOT NULL,
+    books_book_id int  NOT NULL
+);
+
+-- foreign keys
+-- Reference: Loan_books (table: Loan)
+ALTER TABLE Loan ADD CONSTRAINT Loan_books FOREIGN KEY Loan_books (books_book_id)
+    REFERENCES books (book_id);
+
+-- Reference: patrons_Loan (table: patrons)
+ALTER TABLE patrons ADD CONSTRAINT patrons_Loan FOREIGN KEY patrons_Loan (Loan_patron_id)
+    REFERENCES Loan (patron_id);
+
+-- Reference: return_books (table: return)
+ALTER TABLE `return` ADD CONSTRAINT return_books FOREIGN KEY return_books (books_book_id)
+    REFERENCES books (book_id);
+
+-- End of file.
+
